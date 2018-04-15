@@ -5,9 +5,12 @@
 int main() {
     LFSR a;
 
-    std::string c = a.encrypt_decrypt("AAAA");
+    a.parseKey("AAAAAAAAAAAAAAAA");
+    std::string c = a.encrypt_decrypt("Test Sucess");
+
     std::cout<<c<<std::endl;
     LFSR b;
+    b.parseKey("AAAAAAAAAAAAAAAA");
     std::cout<<b.encrypt_decrypt(c);
 
 

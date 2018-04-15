@@ -6,11 +6,9 @@
 
 static void packToBits(unsigned char c, bool b[8])
 {
-    for (int i=0; i < 8; ++i){
+    for (int i=0; i < 8; ++i)
         b[i] = (c & (1<<8-i-1)) != 0;
 
-        std::cout<<b[i];
-    }
 }
 
 
@@ -28,20 +26,20 @@ void LFSR::parseKey(std::string s){
         bool t[8];
         unsigned int i=0;
         unsigned int j=0;
-        while (i !=SIZE*8){
+        while (i !=SIZE){
             char tmp = s.c_str()[j++];
             packToBits(tmp,t);
             for (int k = 0; k <8 ; ++k){
                 this->reg[i] =t[k];
                 ++i;
             }
-
-
         }
     }
-    else
+    else{
         std::cout<<"Key Initializatin failed";
         std::cout<<"Key must be of length : "<<SIZE/8<<std::endl;
+    }
+
 }
 
 LFSR::LFSR(){
