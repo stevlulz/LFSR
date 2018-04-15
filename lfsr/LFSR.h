@@ -4,7 +4,7 @@
 
 #ifndef LINEARFEEDBACKSHIFTREGISTER_LFSR_H
 #define LINEARFEEDBACKSHIFTREGISTER_LFSR_H
-#define SIZE 16
+#define SIZE 128
 #include <iostream>
 #include <deque>
 

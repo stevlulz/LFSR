@@ -4,11 +4,15 @@
 
 #include "LFSR.h"
 
-
-static void DecodeByteIntoEightBools(char theByte, bool *eightBools)
+static void packToBits(unsigned char c, bool b[8])
 {
-    for (int i=0; i<8; i++) eightBools[i] = ((theByte & (1<<i)) != 0);
+    for (int i=0; i < 8; ++i){
+        b[i] = (c & (1<<8-i-1)) != 0;
+
+        std::cout<<b[i];
+    }
 }
+
 
 static unsigned char unpackBits(bool b[8]){
     unsigned char c = 0;
@@ -18,19 +22,17 @@ static unsigned char unpackBits(bool b[8]){
     return c;
 }
 
+//This method is used to change the initiale state with a user input
 void LFSR::parseKey(std::string s){
     if(s.length() == SIZE/8){
-        auto t = new bool[8];
+        bool t[8];
         unsigned int i=0;
         unsigned int j=0;
         while (i !=SIZE*8){
             char tmp = s.c_str()[j++];
-            DecodeByteIntoEightBools(tmp,t);
-            std::cout<<*t;
-
+            packToBits(tmp,t);
             for (int k = 0; k <8 ; ++k){
-                bool res = (tmp & (1<<k)) != 0;
-                this->reg[i] =res;
+                this->reg[i] =t[k];
                 ++i;
             }
 
@@ -39,6 +41,7 @@ void LFSR::parseKey(std::string s){
     }
     else
         std::cout<<"Key Initializatin failed";
+        std::cout<<"Key must be of length : "<<SIZE/8<<std::endl;
 }
 
 LFSR::LFSR(){
@@ -47,10 +50,14 @@ LFSR::LFSR(){
     }
 }
 
+/**
+ *
+ * in  = Xor of all REGi  where  i < 20 or (i<10 && 3*i% 2 == 0 )
+ *
+ **/
 bool LFSR::generateNextBit(){
     bool tmp = this->reg.back();
     this->reg.pop_back();
-    //Function in = last xor out
     bool in = reg[0]^tmp;
     reg.push_front(in);
     return in;
