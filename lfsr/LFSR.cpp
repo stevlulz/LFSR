@@ -62,7 +62,7 @@ bool LFSR::generateNextBit(){
     }
     this->reg.pop_back();
     reg.push_front(in);
-    return in;
+    return tmp;
 }
 
 void LFSR::streamof(int i){
