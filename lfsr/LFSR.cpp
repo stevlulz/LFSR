@@ -55,12 +55,12 @@ LFSR::LFSR(){
  **/
 bool LFSR::generateNextBit(){
     bool tmp = this->reg.back();
-    this->reg.pop_back();
     bool in = tmp;
     for (int i = 0; i <SIZE ; ++i) {
         if(i<20 or (i>40 && 3*i %2 == 0) )
             in ^= this->reg.at(i);
     }
+    this->reg.pop_back();
     reg.push_front(in);
     return in;
 }
